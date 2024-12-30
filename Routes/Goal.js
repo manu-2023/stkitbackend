@@ -1,4 +1,3 @@
-// Router.js
 import express from 'express';
 import { addGoal } from '../Controller/User/addGoal.js'
 import {authenticateToken} from '../Middlewear/authenticateToken.js'; // Adjust path as needed
