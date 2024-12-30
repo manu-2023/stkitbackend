@@ -6,12 +6,8 @@ import otpRoutes from './Routes/otproutes.js';
 import newuser from './Routes/UserSignUp/signuproutes.js';
 import login from './Routes/UserSignUp/Login.js';
 import addGoal from './Routes/Goal.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-console.log(__dirname);
 
 // Initialize Express App
 const app = express();
@@ -23,23 +19,48 @@ app.use(bodyparser.json());
 
 // Use Routes
 app.use('/api/otp', otpRoutes);
-app.use('/addNewUser',newuser);
-app.use('/student-login',login);
-app.use('/add-goal',addGoal);
-// MongoDB Connection
-const mongoUri = 'mongodb://127.0.0.1:27017/Stkit';
+app.use('/addNewUser', newuser);
+app.use('/student-login', login);
+app.use('/add-goal', addGoal);
 
-app.use(express.static(path.join(__dirname, '/frontend/dist'))); // Serve static files
+// MongoDB Connection (Local DB - Mongoose)
+const mongoUriLocal = 'mongodb://127.0.0.1:27017/Stkit';
 
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/dist/index.html'))); // Fallback to index.html
+// MongoDB Connection (Atlas DB - MongoClient)
+const mongoUriAtlas = "mongodb+srv://manu777:13091309ManuM@cluster0.u4k04.mongodb.net/myDatabase?retryWrites=true&w=majority";
 
-mongo.connect(mongoUri)
-    .then(() => {
-        console.log('Connected to DB');
-        app.listen(PORT, () => {
-            console.log(`Server started at http://localhost:${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error('Error connecting to DB:', err);
-    });
+
+// Mongoose connection (for local MongoDB)
+// mongo.connect(mongoUriLocal)
+//   .then(() => {
+//     console.log('Connected to Local DB');
+//     app.listen(PORT, () => {
+//       console.log(`Server started at http://localhost:${PORT}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error('Error connecting to Local DB:', err);
+//   });
+
+// MongoClient connection (for MongoDB Atlas)
+const client = new MongoClient(mongoUriAtlas, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+async function run() {
+  try {
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your MongoDB Atlas deployment. You successfully connected to MongoDB!");
+  } catch (error) {
+    console.error("Error connecting to MongoDB Atlas:", error);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
