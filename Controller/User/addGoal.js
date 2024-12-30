@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const addGoal = async (req, res) => {
+export const addGoal = async (req, res) => {
     const { goal_data } = req.body;
     console.log('Request Body:', req.body);
 
@@ -44,4 +44,3 @@ const addGoal = async (req, res) => {
     }
 };
 
-export default addGoal;
