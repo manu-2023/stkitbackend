@@ -1,3 +1,4 @@
+// index.js
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -14,8 +15,10 @@ dotenv.config();
 // Initialize Express App
 const app = express(); 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const mongoUriAtlas = process.env.MONGO_URI;
+
+console.log('Mongo URI:', mongoUriAtlas); // Debugging log
 
 // Middleware
 app.use(cors());
@@ -28,8 +31,7 @@ app.use('/student-login', login);
 app.use('/add-goal', addGoal);
 
 // MongoDB Connection (Atlas DB)
-mongoose.connect(mongoUriAtlas, {
-})
+mongoose.connect(mongoUriAtlas)
     .then(() => {
         console.log('Pinged your MongoDB Atlas deployment. You successfully connected to MongoDB!');
         
@@ -41,3 +43,6 @@ mongoose.connect(mongoUriAtlas, {
     .catch(err => console.error('Error connecting to MongoDB:', err));
 
 // Example Route
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
