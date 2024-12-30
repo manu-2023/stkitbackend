@@ -1,6 +1,5 @@
 import express from 'express';
 import { addGoal } from '../Controller/User/addGoal.js'
-import {addGoal} from '../Controller/User/addGoal.js'; // Adjust path if needed
 
 import {authenticateToken} from '../Middlewear/authenticateToken.js'; // Adjust path as needed
 
