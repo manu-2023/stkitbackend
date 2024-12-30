@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
-const authenticateToken = (req, res, next) => {
+export const AuthenticateToken = (req, res, next) => {
     // Log all headers and cookies for debugging
     console.log('Headers:', req.headers);
     console.log('Cookies:', req.cookies);
@@ -34,4 +34,3 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
-export default authenticateToken;
