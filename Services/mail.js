@@ -30,16 +30,8 @@ const sendMail = async (email, subject, text) => {
                 <p>Your OTP is: <strong style="color: #FF5722;">${text}</strong>. It is valid for only 3 minutes, so please use it quickly to complete your process.</p>
                 <p>We appreciate your trust in us. Stay safe and secure!</p>
                 <p>Thanking You....</p>
-                <img src="cid:uniqueImageId" alt="Inline Image" style="width: 300px; border-radius: 10px; margin-top: 20px;"/>
             </div>
-        `, 
-        attachments: [
-            {
-                filename: 'mail.png',
-                path: 'D:/SELF/Stuff/StudentKit/backend/public/Images/mail.png',
-                cid: 'uniqueImageId'
-            }
-        ]
+        `
     };
 
     try {

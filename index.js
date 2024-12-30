@@ -45,4 +45,4 @@ mongoose.connect(mongoUriAtlas)
 // Example Route
 app.get('/', (req, res) => {
     res.send('Hello World!');
-});
+})
